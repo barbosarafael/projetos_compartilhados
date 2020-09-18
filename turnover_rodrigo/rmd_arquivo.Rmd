@@ -36,7 +36,14 @@ formato_real_graf <- function(values, nsmall = 0) {
 
 ## 1. Introdução ao TurnOver
 
-- Escrever algo aqui sobre o TurnOver
+O Tunover é nada mais do que a taxa de rotatividade dos funcionários de uma empresa. Mede o percentual de desligamento em um determinado período de tempo, geralmente fechado em períodos anuais. Este tipo de análise não mede só e unicamente o número bruto de desligamentos, e sim traz o intuito de explorar a fundo quais os fatores que influenciam neste processo.
+
+Através de variáveis operacionais e indicadores da empresa, utilizam-se diversas ferramentas que vão desde análises estatísticas até técnicas de Machine Learning. Tudo isso engrandece a análise e traz mais credibilidade para se falar deste assunto.
+
+Além de tudo isso, deve-se deixar claro alguns pontos relevantes para quem trabalha ou deseja trabalhar nesta vertente. Primeiro que o contato com outras áreas é fundamental para deixar a análise robusta e alinhada com o negócio que demanda a resolução: provável falar com gerentes, diretores, área de RH ou os Business Partiner dos setores da empresa. Segundo que esta vertente requer muita responsabilidade e princípio de confidencialidade, pois lida com informações completamente sensível, como salário, risco de desligamento por gestor, dentre outras.
+
+Por fim, o Turnover já traz resultados expressivos atualmente. Diversas empresas enriqueceram as informações sobre seus colaboradores a fim de analisá-las e exeutarem ações para fazer acontecer uma coisa que, mesmo que óbvia, não era muito prticada: funcionário feliz traz bons resultados!
+
 
 ## 2. Entendimento do problema
 
