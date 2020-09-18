@@ -355,12 +355,6 @@ df_score %>%
   count(traffic, top1, top2, top1_ind, top2_ind, top3_ind, sort = TRUE) %>% 
   View
   
-
-
-
-
-
-
 ```
 
 
@@ -395,11 +389,3 @@ df_industria_tops %>%
 
 
 ```
-
-
-```{r}
-
-
-
-```
-
