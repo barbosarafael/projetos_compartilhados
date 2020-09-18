@@ -832,22 +832,22 @@ dados %>%
 
     ## Rows: 1,129
     ## Columns: 16
-    ## $ stag         <dbl> 7.030801, 22.965092, 15.934292, 15.934292, 8.410678, 8.9…
-    ## $ event        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-    ## $ gender       <chr> "m", "m", "f", "f", "m", "f", "f", "f", "f", "f", "f", "…
-    ## $ age          <dbl> 35, 33, 35, 35, 32, 42, 42, 28, 29, 30, 40, 23, 22, 24, …
-    ## $ industry     <chr> "Banks", "Banks", "PowerGeneration", "PowerGeneration", …
-    ## $ profession   <chr> "HR", "HR", "HR", "HR", "Commercial", "HR", "HR", "HR", …
-    ## $ traffic      <chr> "rabrecNErab", "empjs", "rabrecNErab", "rabrecNErab", "y…
-    ## $ coach        <chr> "no", "no", "no", "no", "yes", "yes", "yes", "no", "no",…
-    ## $ head_gender  <chr> "f", "m", "m", "m", "f", "m", "m", "m", "f", "m", "m", "…
-    ## $ greywage     <chr> "white", "white", "white", "white", "white", "white", "w…
-    ## $ way          <chr> "bus", "bus", "bus", "bus", "bus", "bus", "bus", "bus", …
-    ## $ extraversion <dbl> 6.2, 6.2, 6.2, 5.4, 3.0, 6.2, 6.2, 3.8, 8.6, 5.4, 8.6, 3…
-    ## $ independ     <dbl> 4.1, 4.1, 6.2, 7.6, 4.1, 6.2, 6.2, 5.5, 6.9, 5.5, 4.1, 6…
-    ## $ selfcontrol  <dbl> 5.7, 5.7, 2.6, 4.9, 8.0, 4.1, 4.1, 8.0, 2.6, 3.3, 1.8, 4…
-    ## $ anxiety      <dbl> 7.1, 7.1, 4.8, 2.5, 7.1, 5.6, 5.6, 4.0, 4.0, 7.9, 7.1, 4…
-    ## $ novator      <dbl> 8.3, 8.3, 8.3, 6.7, 3.7, 6.7, 6.7, 4.4, 7.5, 8.3, 6.7, 7…
+    ## $ stag         <dbl> 7.030801, 22.965092, 15.934292, 15.934292, 8.410678, 8...
+    ## $ event        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+    ## $ gender       <chr> "m", "m", "f", "f", "m", "f", "f", "f", "f", "f", "f",...
+    ## $ age          <dbl> 35, 33, 35, 35, 32, 42, 42, 28, 29, 30, 40, 23, 22, 24...
+    ## $ industry     <chr> "Banks", "Banks", "PowerGeneration", "PowerGeneration"...
+    ## $ profession   <chr> "HR", "HR", "HR", "HR", "Commercial", "HR", "HR", "HR"...
+    ## $ traffic      <chr> "rabrecNErab", "empjs", "rabrecNErab", "rabrecNErab", ...
+    ## $ coach        <chr> "no", "no", "no", "no", "yes", "yes", "yes", "no", "no...
+    ## $ head_gender  <chr> "f", "m", "m", "m", "f", "m", "m", "m", "f", "m", "m",...
+    ## $ greywage     <chr> "white", "white", "white", "white", "white", "white", ...
+    ## $ way          <chr> "bus", "bus", "bus", "bus", "bus", "bus", "bus", "bus"...
+    ## $ extraversion <dbl> 6.2, 6.2, 6.2, 5.4, 3.0, 6.2, 6.2, 3.8, 8.6, 5.4, 8.6,...
+    ## $ independ     <dbl> 4.1, 4.1, 6.2, 7.6, 4.1, 6.2, 6.2, 5.5, 6.9, 5.5, 4.1,...
+    ## $ selfcontrol  <dbl> 5.7, 5.7, 2.6, 4.9, 8.0, 4.1, 4.1, 8.0, 2.6, 3.3, 1.8,...
+    ## $ anxiety      <dbl> 7.1, 7.1, 4.8, 2.5, 7.1, 5.6, 5.6, 4.0, 4.0, 7.9, 7.1,...
+    ## $ novator      <dbl> 8.3, 8.3, 8.3, 6.7, 3.7, 6.7, 6.7, 4.4, 7.5, 8.3, 6.7,...
 
 ## 5\. EDA
 
@@ -880,6 +880,7 @@ dados %>%
   ggplot(data = ., aes(x = variavel, y = valor, fill = variavel)) +
   geom_boxplot(colour = "black") +
   theme(legend.position = "null") +
+  scale_y_continuous(breaks = c(0, 160, 20)) +
   labs(x = "Variável", y = "Valor")
 ```
 
@@ -937,9 +938,10 @@ dados %>%
   pivot_longer(stag:novator, names_to = "variavel", values_to = "valor") %>% 
   ggplot(data = ., aes(x = variavel, y = valor, fill = variavel)) +
   geom_boxplot(colour = "black") +
-  facet_wrap(~ event) + 
+  facet_wrap(~ event) +
   theme(legend.position = "null") +
-  labs(x = "Variável", y = "Valor")
+  labs(x = "Variável", y = "Valor") +
+  coord_flip()
 ```
 
 <img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
@@ -979,6 +981,313 @@ cowplot::plot_grid(plotlist = all_plots2, nrow = 4)
 
 <img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
-## 6\. Modelagem
+``` r
+dados %>% 
+  select(extraversion:novator) %>% 
+  rownames_to_column(var = "ID") %>% 
+  pivot_longer(extraversion:novator, names_to = "variavel", values_to = "valor") %>% 
+  group_by(ID) %>% 
+  mutate(the_rank  = rank(-valor, ties.method = "random")) %>%
+  filter(the_rank %in% c(1, 2, 3)) %>% 
+  select(-the_rank) %>% 
+  pivot_wider(names_from = variavel, values_from = valor)
+```
 
-## 7\. Predição
+    ## # A tibble: 1,129 x 6
+    ## # Groups:   ID [1,129]
+    ##    ID    extraversion anxiety novator independ selfcontrol
+    ##    <chr>        <dbl>   <dbl>   <dbl>    <dbl>       <dbl>
+    ##  1 1              6.2     7.1     8.3     NA            NA
+    ##  2 2              6.2     7.1     8.3     NA            NA
+    ##  3 3              6.2    NA       8.3      6.2          NA
+    ##  4 4              5.4    NA       6.7      7.6          NA
+    ##  5 5             NA       7.1    NA        4.1           8
+    ##  6 6              6.2    NA       6.7      6.2          NA
+    ##  7 7              6.2    NA       6.7      6.2          NA
+    ##  8 8             NA      NA       4.4      5.5           8
+    ##  9 9              8.6    NA       7.5      6.9          NA
+    ## 10 10            NA       7.9     8.3      5.5          NA
+    ## # ... with 1,119 more rows
+
+``` r
+#----- AQUI É O IMPORTANTE
+
+
+
+which_nth_highest_richie <- function(x, n){
+  
+  for(i in seq_len(n - 1L)) x[x == max(x)] <- -Inf
+  which(x == max(x))
+  
+}
+
+
+df_tops <- 
+  dados %>% 
+  select(extraversion:novator) %>% 
+  rownames_to_column("row") %>% 
+  mutate(top1 = apply(.[2:6], 1, function(x) names(x)[which_nth_highest_richie(x = x, n = 1)]),
+         top2 = apply(.[2:6], 1, function(x) names(x)[which_nth_highest_richie(x = x, n = 2)])) %>% 
+  unnest(cols = c(top1, top2)) %>% 
+  distinct(row, .keep_all = TRUE)
+
+
+
+#---- TOP1 POR INDIVÍDUO
+
+dados <- 
+  dados %>% 
+  bind_cols(df_tops %>% select(top1, top2))
+  
+  
+dados %>% 
+  filter(event == 0) %>% 
+  count(event, top1, sort = TRUE) %>% 
+  ggplot(data = , aes(x = reorder(top1, n), y = n)) +
+  geom_bar(stat = "identity", colour = "black", fill = "#70B7B3")
+```
+
+<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+
+``` r
+#--- TOP1 POR INDUSTRIA
+
+
+
+df_industria_tops <- 
+  dados %>% 
+  filter(event == 0) %>% 
+  group_by(industry) %>% 
+  summarise(extraversion = mean(extraversion, na.rm = TRUE),
+            independ = mean(independ, na.rm = TRUE),
+            selfcontrol = mean(selfcontrol, na.rm = TRUE),
+            anxiety = mean(anxiety, na.rm = TRUE),
+            novator = mean(novator, na.rm = TRUE)) %>% 
+  ungroup %>% 
+  rownames_to_column("row") %>%
+  mutate(top1_ind = apply(.[3:6], 1, 
+                      function(x) names(x)[which_nth_highest_richie(x = x, n = 1)]),
+         top2_ind = apply(.[3:6], 1, 
+                      function(x)          names(x)[which_nth_highest_richie(x = x, n = 2)]),
+         top3_ind = apply(.[3:6], 1, 
+                      function(x)          names(x)[which_nth_highest_richie(x = x, n = 3)])) %>% 
+  unnest(cols = c(top1_ind, top2_ind, top3_ind)) %>% 
+  distinct(row, .keep_all = TRUE)
+
+
+
+df_score <- 
+  dados %>% 
+  inner_join(df_industria_tops %>% select(industry, top1_ind, top2_ind, top3_ind), by = "industry")
+  
+
+df_score %>% 
+  count(traffic, top1, top2, top1_ind, top2_ind, top3_ind, sort = TRUE) %>% 
+  View
+```
+
+``` r
+df_score %>%
+  mutate(col1 = ifelse(top1 == top1_ind, 1, 0),
+         col2 = ifelse(top1 == top2_ind, 1, 0),
+         col3 = ifelse(top1 == top3_ind, 1, 0),
+         col4 = ifelse(top2 == top1_ind, 1, 0),
+         col5 = ifelse(top2 == top2_ind, 1, 0),
+         col6 = ifelse(top2 == top3_ind, 1, 0),
+         score = col1 + col2 + col3 + col4 + col5 + col6) %>% 
+  group_by(traffic) %>% 
+  summarise(score = sum(score)) %>% 
+  arrange(-score) %>% 
+  ggplot(data = , aes(x = reorder(traffic, score), y = score)) +
+  geom_bar(stat = "identity", colour = "black", fill = "#70B7B3") +
+  labs(title = "Score de quem mais acerta por plataforma")
+```
+
+<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+
+``` r
+df_industria_tops %>% 
+  filter(industry %in% c("Banks", "manufacture", "IT", "Consult", "State")) %>% 
+  select(industry, top1_ind: top3_ind) %>% 
+  knitr::kable()
+```
+
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+industry
+
+</th>
+
+<th style="text-align:left;">
+
+top1\_ind
+
+</th>
+
+<th style="text-align:left;">
+
+top2\_ind
+
+</th>
+
+<th style="text-align:left;">
+
+top3\_ind
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+Banks
+
+</td>
+
+<td style="text-align:left;">
+
+independ
+
+</td>
+
+<td style="text-align:left;">
+
+anxiety
+
+</td>
+
+<td style="text-align:left;">
+
+extraversion
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+Consult
+
+</td>
+
+<td style="text-align:left;">
+
+anxiety
+
+</td>
+
+<td style="text-align:left;">
+
+independ
+
+</td>
+
+<td style="text-align:left;">
+
+extraversion
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+IT
+
+</td>
+
+<td style="text-align:left;">
+
+anxiety
+
+</td>
+
+<td style="text-align:left;">
+
+extraversion
+
+</td>
+
+<td style="text-align:left;">
+
+independ
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+manufacture
+
+</td>
+
+<td style="text-align:left;">
+
+selfcontrol
+
+</td>
+
+<td style="text-align:left;">
+
+anxiety
+
+</td>
+
+<td style="text-align:left;">
+
+extraversion
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+State
+
+</td>
+
+<td style="text-align:left;">
+
+anxiety
+
+</td>
+
+<td style="text-align:left;">
+
+independ
+
+</td>
+
+<td style="text-align:left;">
+
+extraversion
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
