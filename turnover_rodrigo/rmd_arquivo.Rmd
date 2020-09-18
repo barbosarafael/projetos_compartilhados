@@ -269,12 +269,6 @@ cowplot::plot_grid(plotlist = all_plots2, nrow = 4)
 ```
 
 
-
-## 6. Modelagem
-
-## 7. Predição
-
-
 ```{r}
 
 dados %>% 
