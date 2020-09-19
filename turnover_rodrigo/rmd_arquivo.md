@@ -8,61 +8,53 @@ Yaktocat](https://www.nvoip.com.br/wp-content/uploads/2018/09/turnover_face.png)
 
 ## 1\. Introdução ao TurnOver
 
-O Tunover é nada mais do que a taxa de rotatividade dos funcionários de
+O Tunover nada mais é do que a taxa de rotatividade dos funcionários de
 uma empresa. Mede o percentual de desligamento em um determinado período
-de tempo, geralmente fechado em períodos anuais. Este tipo de análise
-não mede só e unicamente o número bruto de desligamentos, e sim traz o
+de tempo, geralmente em fechamentos anuais. Este tipo de análise não
+mede só e unicamente o número bruto de desligamentos, mas também têm o
 intuito de explorar a fundo quais os fatores que influenciam neste
 processo.
 
 Através de variáveis operacionais e indicadores da empresa, utilizam-se
 diversas ferramentas que vão desde análises estatísticas até técnicas de
-Machine Learning. Tudo isso engrandece a análise e traz mais
+Machine Learning. Tudo isso engrandece o estudo e traz mais
 credibilidade para se falar deste assunto.
 
 Além de tudo isso, deve-se deixar claro alguns pontos relevantes para
 quem trabalha ou deseja trabalhar nesta vertente. Primeiro que o contato
 com outras áreas é fundamental para deixar a análise robusta e alinhada
 com o negócio que demanda a resolução: provável falar com gerentes,
-diretores, área de RH ou os Business Partiner dos setores da empresa.
-Segundo que esta vertente requer muita responsabilidade e princípio de
-confidencialidade, pois lida com informações completamente sensível,
+diretores, área de RH ou os Business Partner dos setores da empresa.
+Segundo que requer muita responsabilidade e princípio de
+confidencialidade, pois lida com informações completamente sensíveis,
 como salário, risco de desligamento por gestor, dentre outras.
 
 Por fim, o Turnover já traz resultados expressivos atualmente. Diversas
 empresas enriqueceram as informações sobre seus colaboradores a fim de
-analisá-las e exeutarem ações para fazer acontecer uma coisa que, mesmo
-que óbvia, não era muito prticada: funcionário feliz traz bons
-resultados\!
+analisá-las e executarem ações para fazer acontecer uma coisa que, mesmo
+que óbvia, não era muito praticada: **funcionário feliz traz bons
+resultados\!**
 
 ## 2\. Entendimento do problema
 
+Neste exemplo de causa, nós extraímos uma base de dados do portal Kaggle
+(completar as informações)\!\!\!, em que trata-se de uma análise de
+turnover demissional, o que se volta mais na movimentação de
+desligamentos dos colaboradores. Com isso, temos as seguintes variáveis:
+
   - **stag**: experiência (em anos ou meses)
-
   - **event**: demitido ou não
-
   - **gender**: gênero
-
   - **age**: idade
-
   - **industry**: tipo de indústria
-
   - **profession**: setor em que trabalha
-
   - **traffic**: meio em que o candidato se candidatou
-
   - **coach**: presença de um **buddy**
-
   - **head\_gender**: gênero do seu **buddy**
-
   - **greywage**: algo relacionado com taxas para o governo
-
   - **way**: meio de transporte para o trabalho
-
   - **extraversion**, **independ**, **selfcontrol**, **anxiety**,
     **novator**: Escala de teste Big5
-
-  - Escrever algo sobre o problema atual
 
 ## 3\. R e Rstudio
 
@@ -86,12 +78,9 @@ require(kableExtra)
 
 ### 3.2. Importação dos dados
 
-  - Escrever algo?
-
-<!-- end list -->
-
 ``` r
 dados <- read.csv(file = "data/turnover-data-set.csv")
+
 
 dados %>% 
   head %>% 
@@ -812,6 +801,14 @@ bus
 
 </table>
 
+``` r
+dados <-  
+  dados %>% 
+  mutate(event = as.character(x = event),
+         event = case_when(event == 0 ~ "Não",
+                           TRUE ~ "Sim"))
+```
+
 ## 4\. Base de dados (estrutura)
 
 <p align="center">
@@ -833,7 +830,7 @@ dados %>%
     ## Rows: 1,129
     ## Columns: 16
     ## $ stag         <dbl> 7.030801, 22.965092, 15.934292, 15.934292, 8.410678, 8...
-    ## $ event        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+    ## $ event        <chr> "Sim", "Sim", "Sim", "Sim", "Sim", "Sim", "Sim", "Sim"...
     ## $ gender       <chr> "m", "m", "f", "f", "m", "f", "f", "f", "f", "f", "f",...
     ## $ age          <dbl> 35, 33, 35, 35, 32, 42, 42, 28, 29, 30, 40, 23, 22, 24...
     ## $ industry     <chr> "Banks", "Banks", "PowerGeneration", "PowerGeneration"...
@@ -849,106 +846,112 @@ dados %>%
     ## $ anxiety      <dbl> 7.1, 7.1, 4.8, 2.5, 7.1, 5.6, 5.6, 4.0, 4.0, 7.9, 7.1,...
     ## $ novator      <dbl> 8.3, 8.3, 8.3, 6.7, 3.7, 6.7, 6.7, 4.4, 7.5, 8.3, 6.7,...
 
-## 5\. EDA
+## 5\. Análise Exploratória de Dados
+
+  - A Análise Exploratória de Dados é uma técnica estatística que
+    consiste em um conjunto de ferramentas com a finalidade de
+    organizar, resumir e descrever características importantes de um
+    conjunto de dados, por meio de: (**i**) gráficos, que é uma forma de
+    representação dinâmica dos dados da tabela, sendo mais eficiente
+    para visualização das informações; (**ii**) tabelas, que são um
+    método não discursivo de mostrar informações, utilizando dados
+    numéricos e símbolos, ordenados de acordo com as variáveis
+    analisadas no fenômeno em estudo; e (**iii**) medidas de sínteses,
+    para uma melhor visualização e interpretação das informações e com
+    isso se pode obter resultados sobre a variável em estudo (BUSSAB;
+    MORETTIN, 2013).
+
+  - Para o mundo de People Analytics, é uma etapa de extrema
+    necessidade, pois ela nos traz as primeiras impressões para análises
+    posteriores. Por meio dos gráficos e tabelas, podemos entender e
+    tirar boas conclusões sobre o material estudado
 
 ### 5.1. Proporção da variável `Event`
 
 ``` r
+cores <- c("#70B7B3", "firebrick")
+
 dados %>% 
   count(event) %>% 
-  mutate(event = case_when(event == 0 ~ "Não",
-                           TRUE ~ "Sim"),
-         perc = n/sum(n)*100) %>% 
+  mutate(perc = n/sum(n)*100) %>% 
   ggplot(data = ., aes(x = event, y = perc, fill = event)) +
   geom_bar(stat = "identity", colour = "black") +
   geom_text(aes(label = formato_real_graf(round(perc, 2))), vjust = -0.9, size = 5) +
   theme(legend.position = "null") +
-  labs(x = "Event", y = "Percentual") +
+  labs(x = "Desligamento", y = "Percentual") +
   scale_y_continuous(limits = c(0, 60)) +
-  scale_fill_brewer(palette = "Dark2")
+  scale_fill_manual(values = cores)
 ```
 
 <img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
-### 5.2. Variáveis numéricas
+  - Podemos notar que a base de dados está bem equilibrada quanto ao
+    número de trabalhadores “ativos” e desligados. Isso indica um alto
+    número de desligamentos.
+
+  - Para melhorar nossa análise, tentaremos fazer alguns questionamentos
+    a fim de direcionar nossa abordagem e tentar encontrar os principais
+    fatores para o desligamentos destes individuos. São elas:
+    
+    1.  Existe diferença entre os gêneros quanto ao desligamento?
+    2.  Qual indústria ou setor de trabalho mais desliga?
+    3.  Quanto a idade dos profissionais, existe influência no
+        desligamento?
+    4.  E o meio de candidatura? Impacta nos deligamentos também?
+
+### 5.2. Análise socioeconômica
+
+  - Primeiro vamos tentar descobrir o perfil socioeconômico dos
+    trabalhadores por meio das variáveis: Gênero, Idade, Tempo de
+    Experiência, Ramo da Indústria que Trabalha, Setor que Trabalha,
+    Meio de Transporte Utilizado e Meio de Candidatura para a Vaga de
+    Emprego.
+
+#### 5.2.1. Variáveis numéricas: `idade` e `tempo de experiência`
 
 ``` r
 dados %>% 
-  mutate(event = factor(x = event)) %>% 
-  select_if(is.numeric) %>% 
-  pivot_longer(stag:novator, names_to = "variavel", values_to = "valor") %>% 
+  select(event, age, stag) %>% 
+  group_by(event) %>% 
+  pivot_longer(age:stag, names_to = "variavel", values_to = "valor") %>% 
   ggplot(data = ., aes(x = variavel, y = valor, fill = variavel)) +
   geom_boxplot(colour = "black") +
   theme(legend.position = "null") +
-  scale_y_continuous(breaks = c(0, 160, 20)) +
-  labs(x = "Variável", y = "Valor")
+  labs(x = "Variável", y = "Valor")  +
+  facet_wrap(~ event) +
+  scale_fill_manual(values = cores)
 ```
 
 <img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
-### 5.3. Variáveis categóricas
+``` r
+testet_age <- t.test(dados$age ~ dados$event)
+testet_stag <- t.test(dados$stag ~ dados$event)
+
+paste("P-valor age:", round(testet_age$p.value, 4))
+```
+
+    ## [1] "P-valor age: 0.1014"
+
+``` r
+paste("P-valor stag:", round(testet_stag$p.value, 4))
+```
+
+    ## [1] "P-valor stag: 0.1046"
+
+#### 5.2.2. Variáveis categóricas
+
+Gênero, Ramo da Indústria que Trabalha, Setor que Trabalha, Meio de
+Transporte Utilizado e Meio de Candidatura para a Vaga de Emprego.
 
 ``` r
 df_chr <- 
   dados %>% 
-  mutate(event = as.character(x = event),
-         event = case_when(event == 0 ~ "Não",
-                           TRUE ~ "Sim"),
-         profession = ifelse(profession == "BusinessDevelopment",
-                             "BusinessDev.", profession)
-         ) %>% 
-  select_if(is.character)
-  
-
-rafs_geom_bar <- function(df, x){
-  
-  df %>% 
-    count(.data[[x]], sort = TRUE) %>% 
-    ggplot(data = ., aes(x = reorder(.data[[x]], n), y = n, 
-                         fill = .data[[x]])) +
-    geom_bar(stat = "identity", colour = "black") +
-    labs(y = "Quantidade", x = .data[[x]]) +
-    theme_minimal(14) +
-    theme(legend.position = "null") +
-    scale_fill_brewer(palette = "Set3") +
-    coord_flip()
-    
-}
+  mutate(profession = ifelse(profession == "BusinessDevelopment",
+                             "BusinessDev.", profession)) %>% 
+  select(event, gender, industry, profession, traffic, way)
 
 
-ys <- colnames(df_chr)
-
-all_plots <- map(ys, ~rafs_geom_bar(df = df_chr, x= .x))
-
-cowplot::plot_grid(plotlist = all_plots)
-```
-
-<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
-
-### 5.4. Interação da variável `Event`
-
-#### 5.4.1. Variáveis quantitativas
-
-``` r
-dados %>% 
-  select_if(is.numeric) %>% 
-  select(event, stag, everything()) %>% 
-  mutate(event = case_when(event == 0 ~ "Não",
-                           TRUE ~ "Sim")) %>% 
-  pivot_longer(stag:novator, names_to = "variavel", values_to = "valor") %>% 
-  ggplot(data = ., aes(x = variavel, y = valor, fill = variavel)) +
-  geom_boxplot(colour = "black") +
-  facet_wrap(~ event) +
-  theme(legend.position = "null") +
-  labs(x = "Variável", y = "Valor") +
-  coord_flip()
-```
-
-<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
-
-#### 5.4.2. Variáveis categóricas
-
-``` r
 rafs_geom_bar2 <- function(df, x, y){
   
   df %>% 
@@ -968,7 +971,7 @@ rafs_geom_bar2 <- function(df, x, y){
 
 ys1 <-
   df_chr %>% 
-  select(-event) %>% 
+  select(-c(event, industry, profession)) %>% 
   names
 
 all_plots2 <- map2(.x = ys1, .y = "event", 
@@ -976,38 +979,41 @@ all_plots2 <- map2(.x = ys1, .y = "event",
                                          x = .x,
                                          y = .y))
 
-cowplot::plot_grid(plotlist = all_plots2, nrow = 4)
+cowplot::plot_grid(plotlist = all_plots2, nrow = 3)
 ```
 
-<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ``` r
-dados %>% 
-  select(extraversion:novator) %>% 
-  rownames_to_column(var = "ID") %>% 
-  pivot_longer(extraversion:novator, names_to = "variavel", values_to = "valor") %>% 
-  group_by(ID) %>% 
-  mutate(the_rank  = rank(-valor, ties.method = "random")) %>%
-  filter(the_rank %in% c(1, 2, 3)) %>% 
-  select(-the_rank) %>% 
-  pivot_wider(names_from = variavel, values_from = valor)
+ys3 <-
+  df_chr %>% 
+  select(c(industry, profession)) %>% 
+  names
+
+all_plots3 <- map2(.x = ys3, .y = "event", 
+                   .f = ~ rafs_geom_bar2(df = df_chr, 
+                                         x = .x,
+                                         y = .y))
+
+cowplot::plot_grid(plotlist = all_plots3, nrow = 2)
 ```
 
-    ## # A tibble: 1,129 x 6
-    ## # Groups:   ID [1,129]
-    ##    ID    extraversion anxiety novator independ selfcontrol
-    ##    <chr>        <dbl>   <dbl>   <dbl>    <dbl>       <dbl>
-    ##  1 1              6.2     7.1     8.3     NA            NA
-    ##  2 2              6.2     7.1     8.3     NA            NA
-    ##  3 3              6.2    NA       8.3      6.2          NA
-    ##  4 4              5.4    NA       6.7      7.6          NA
-    ##  5 5             NA       7.1    NA        4.1           8
-    ##  6 6              6.2    NA       6.7      6.2          NA
-    ##  7 7              6.2    NA       6.7      6.2          NA
-    ##  8 8             NA      NA       4.4      5.5           8
-    ##  9 9              8.6    NA       7.5      6.9          NA
-    ## 10 10            NA       7.9     8.3      5.5          NA
-    ## # ... with 1,119 more rows
+<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-5-2.png" style="display: block; margin: auto;" />
+
+  - O gênero `feminino` possui maior frequência, em relação ao gênero
+    oposto, para quem é desligado ou não
+
+  - As plataformas **youjs**, **empjs** e **rabrecNErab** são as que
+    mais indicam candidatos no geral
+
+  - O ônibus é o meio de transporte mais utilizado e a caminhada é o
+    menos utilizado
+
+### 5.4. Interação da variável `Event`
+
+#### 5.4.1. Variáveis quantitativas
+
+#### 5.4.2. Variáveis categóricas
 
 ``` r
 #----- AQUI É O IMPORTANTE
@@ -1047,7 +1053,7 @@ dados %>%
   geom_bar(stat = "identity", colour = "black", fill = "#70B7B3")
 ```
 
-<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 ``` r
 #--- TOP1 POR INDUSTRIA
@@ -1056,7 +1062,7 @@ dados %>%
 
 df_industria_tops <- 
   dados %>% 
-  filter(event == 0) %>% 
+  filter(event == "Não") %>% 
   group_by(industry) %>% 
   summarise(extraversion = mean(extraversion, na.rm = TRUE),
             independ = mean(independ, na.rm = TRUE),
@@ -1073,20 +1079,15 @@ df_industria_tops <-
                       function(x)          names(x)[which_nth_highest_richie(x = x, n = 3)])) %>% 
   unnest(cols = c(top1_ind, top2_ind, top3_ind)) %>% 
   distinct(row, .keep_all = TRUE)
+```
 
-
-
+``` r
 df_score <- 
   dados %>% 
   inner_join(df_industria_tops %>% select(industry, top1_ind, top2_ind, top3_ind), by = "industry")
   
 
-df_score %>% 
-  count(traffic, top1, top2, top1_ind, top2_ind, top3_ind, sort = TRUE) %>% 
-  View
-```
 
-``` r
 df_score %>%
   mutate(col1 = ifelse(top1 == top1_ind, 1, 0),
          col2 = ifelse(top1 == top2_ind, 1, 0),
@@ -1103,7 +1104,7 @@ df_score %>%
   labs(title = "Score de quem mais acerta por plataforma")
 ```
 
-<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="rmd_arquivo_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 ``` r
 df_industria_tops %>% 

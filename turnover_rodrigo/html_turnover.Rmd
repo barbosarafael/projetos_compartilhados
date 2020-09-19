@@ -1,21 +1,39 @@
 ---
-title: "TurnOver v2"
-author: "**Autores:** Rodrigo Almeida & Rafael Barbosa | **Data:** "
-date: "06/04/2020"
-output: 
-  rmarkdown::github_document:
-  theme: united
-  code_folding: hide
-always_allow_html: true
+title: "TurnOver"
+author: "**Autores:** Rodrigo Almeida & Rafael Barbosa"
+date: "**Data:** 19/09/2020"
+graphics: yes
+output:
+  html_document:
+    theme: united
+    code_folding: hide
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+    number_sections: true
 ---
 
-![Image of Yaktocat](https://www.nvoip.com.br/wp-content/uploads/2018/09/turnover_face.png)
 
+![](https://www.nvoip.com.br/wp-content/uploads/2018/09/turnover_face.png)
+
+
+```{css, echo=FALSE}
+.header-section-number::after {
+  content: ".";
+}
+
+body{ /* Normal  */
+      font-size: 16px;
+  }
+
+```
 
 ```{r setup, include = FALSE}
 
 require(tidyverse)
 require(kableExtra)
+require(DT)
 
 knitr::opts_chunk$set(fig.width = 8, fig.height = 4,
                       echo = TRUE, warning = FALSE,
@@ -34,18 +52,19 @@ formato_real_graf <- function(values, nsmall = 0) {
 ```
 
 
-## 1. Introdução ao TurnOver
 
-O Tunover nada mais é do que a taxa de rotatividade dos funcionários de uma empresa. Mede o percentual de desligamento em um determinado período de tempo, geralmente em fechamentos anuais. Este tipo de análise não mede só e unicamente o número bruto de desligamentos, mas também têm o intuito de explorar a fundo quais os fatores que influenciam neste processo.
+# Introdução ao TurnOver
 
-Através de variáveis operacionais e indicadores da empresa, utilizam-se diversas ferramentas que vão desde análises estatísticas até técnicas de Machine Learning. Tudo isso engrandece o estudo e traz mais credibilidade para se falar deste assunto.
+- O Tunover nada mais é do que a taxa de rotatividade dos funcionários de uma empresa. Mede o percentual de desligamento em um determinado período de tempo, geralmente em fechamentos anuais. Este tipo de análise não mede só e unicamente o número bruto de desligamentos, mas também têm o intuito de explorar a fundo quais os fatores que influenciam neste processo.
 
-Além de tudo isso, deve-se deixar claro alguns pontos relevantes para quem trabalha ou deseja trabalhar nesta vertente. Primeiro que o contato com outras áreas é fundamental para deixar a análise robusta e alinhada com o negócio que demanda a resolução: provável falar com gerentes, diretores, área de RH ou os Business Partner dos setores da empresa. Segundo que requer muita responsabilidade e princípio de confidencialidade, pois lida com informações completamente sensíveis, como salário, risco de desligamento por gestor, dentre outras.
+- Através de variáveis operacionais e indicadores da empresa, utilizam-se diversas ferramentas que vão desde análises estatísticas até técnicas de Machine Learning. Tudo isso engrandece o estudo e traz mais credibilidade para se falar deste assunto.
 
-Por fim, o Turnover já traz resultados expressivos atualmente. Diversas empresas enriqueceram as informações sobre seus colaboradores a fim de analisá-las e executarem ações para fazer acontecer uma coisa que, mesmo que óbvia, não era muito praticada: **funcionário feliz traz bons resultados!**
+- Além de tudo isso, deve-se deixar claro alguns pontos relevantes para quem trabalha ou deseja trabalhar nesta vertente. Primeiro que o contato com outras áreas é fundamental para deixar a análise robusta e alinhada com o negócio que demanda a resolução: provável falar com gerentes, diretores, área de RH ou os Business Partner dos setores da empresa. Segundo que requer muita responsabilidade e princípio de confidencialidade, pois lida com informações completamente sensíveis, como salário, risco de desligamento por gestor, dentre outras.
+
+- Por fim, o Turnover já traz resultados expressivos atualmente. Diversas empresas enriqueceram as informações sobre seus colaboradores a fim de analisá-las e executarem ações para fazer acontecer uma coisa que, mesmo que óbvia, não era muito praticada: **funcionário feliz traz bons resultados!**
 
 
-## 2. Entendimento do problema
+# Entendimento do problema
 
 
 Neste exemplo de causa, nós extraímos uma base de dados do portal Kaggle (completar as informações)!!!, em que trata-se de uma análise de turnover demissional, o que se volta mais na movimentação de desligamentos dos colaboradores. Com isso, temos as seguintes variáveis:
@@ -65,7 +84,8 @@ Neste exemplo de causa, nós extraímos uma base de dados do portal Kaggle (comp
 - **extraversion**, **independ**, **selfcontrol**, **anxiety**, **novator**: Escala de teste Big5 
 
 
-## 3. R e Rstudio
+
+# R e Rstudio
 
 <p align="center">
   <img alt="decision_tree" src="images/r_and_rstudio.png" alt="drawing" width="400" height="200"/>
@@ -74,32 +94,99 @@ Neste exemplo de causa, nós extraímos uma base de dados do portal Kaggle (comp
 </p>
 
 
-- Escrever algo aqui sobre o R e o Rstudio
+## O que é o R?
+
+- Linguagem e ambiente para estatística computacional
+
+- Baseada na linguagem S
+
+- **1993**: Disponibilização a versão beta do projeto
+
+- **2000**: Versão 1.0.0 foi disponibilizada pelo CRAN
+
+## Evolução dos pacotes
 
 
-### 3.1. Pacotes utilizados
+- **1997**: CRAN servidor em que os pacotes, documentações e versões do R foi criiado
+
+- Exemplo de primeiros pacotes disponibilizados: **date** e **bootstrap**
+
+- Atualmente temos pacotes mais robustos para análise de dados, machine learning, em relação aos anteriores 
+
+
+## Tidyverse
+
+- **2017:** Criado pelo Hadley Wickham. Biblioteca que une várias outras bibliotecas para análise de dados, machine learning, etc, para melhorar o organização e eficiência no pipeline de ciência de dados
+
+- O fluxo/pipeline segue o seguinte esquema:
+
+
+<p align="center">
+<img alt="decision_tree" src="images/pipeline_tidyverse.png" alt="drawing" width="517" height="190"/>
+<br>
+<em> <span>Disponível em <a href="https://bcrf.biochem.wisc.edu/all-tutorials/tutorial-materials-r-rstudio/">R for Data Science</a></span> </em>
+</p>
+
+
+- Os principais pacotes do `tidyverse` são:
+
+  1. ggplot2
+  2. dplyr
+  3. tidyr
+  4. readr
+  5. purrr
+  6. tibble
+  7. stringr
+  8. forcats
+
+
+## ggplot2
+
+
+
+- Criado em 2007
+
+-	Baseado no livro The Grammar of Graphics, que menciona os componentes da visualização de dados
+
+- Tanto é que o gg de ggplot2 vem de gramática dos gráficos
+
+- A filosofia do ggplot2 segue a seguinte linha de pensamento em relação a camadas:
+
+
+<p align="center">
+<img alt="decision_tree" src="images/camadas.png" alt="drawing" width="500" height="250"/>
+<br>
+<em> <span>Disponível em <a href="https://bcrf.biochem.wisc.edu/all-tutorials/tutorial-materials-r-rstudio/">R for Data Science</a></span> </em>
+</p>
+
+
+## Bibliotecas alternativas em Python
+
+- Ggplot: única diferença é que no python não tem a quebra de linha no final, então temos que colocar o "+ \\"
+
+- Plotnine
+
+- Altair: baseado no VEGA, que também segue essa filosofia de Gramática dos Gráficos
+
+
+
+## Pacotes utilizados
 
 
 ```{r pacotes_utilizados}
 
 require(tidyverse)
 require(kableExtra)
+require(DT)
 
 ```
 
-### 3.2. Importação dos dados 
+## Importação dos dados e estrutura
 
 ```{r dados}
 
 
 dados <- read.csv(file = "data/turnover-data-set.csv")
-
-
-dados %>% 
-  head %>% 
-  kbl %>% 
-  kable_classic(full_width = T, html_font = "Arial") %>% 
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive", position = "center"))
 
 
 dados <-  
@@ -109,28 +196,15 @@ dados <-
                            TRUE ~ "Sim"))
 
 
-
-```
-
-
-## 4. Base de dados (estrutura)
-
-<p align="center">
-  <img alt="decision_tree" src="images/exploratory.jpg" alt="drawing" width="600" height="400"/>
-  <br>
-  <em> <span>Foto por <a href="https://unsplash.com/@marcobias?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Marco Biasibetti</a> em <a href="https://unsplash.com/s/photos/explorator?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> </em>
-</p>
-
-
-
-```{r}
-
 dados %>% 
-  glimpse
+  DT::datatable(rownames = FALSE, filter = 'top', 
+                options = list(pageLength = 5, dom = 'tip',
+                               autoWidth = TRUE))
+
 
 ```
 
-## 5. Análise Exploratória de Dados
+# Análise Exploratória de Dados
 
 
 
@@ -139,7 +213,7 @@ dados %>%
 - Para o mundo de People Analytics, é uma etapa de extrema necessidade, pois ela nos traz as primeiras impressões para análises posteriores. Por meio dos gráficos e tabelas, podemos entender e tirar boas conclusões sobre o material estudado
 
 
-### 5.1. Proporção da variável `Event`
+## Proporção da variável `Event`
 
 ```{r}
 
@@ -171,13 +245,13 @@ dados %>%
   4. E o meio de candidatura? Impacta nos deligamentos também?
 
 
-### 5.2. Análise socioeconômica
+## Análise socioeconômica
 
 
 - Primeiro vamos tentar descobrir o perfil socioeconômico dos trabalhadores por meio das variáveis: Gênero, Idade, Tempo de Experiência, Ramo da Indústria que Trabalha, Setor que Trabalha, Meio de Transporte Utilizado e Meio de Candidatura para a Vaga de Emprego.
 
 
-#### 5.2.1. Variáveis numéricas: `idade` e `tempo de experiência`
+### Variáveis numéricas: `idade` e `tempo de experiência`
 
 
 ```{r}
@@ -209,9 +283,9 @@ paste("P-valor stag:", round(testet_stag$p.value, 4))
 
 
 
-#### 5.2.2. Variáveis categóricas
+### Variáveis categóricas
 
-Gênero, Ramo da Indústria que Trabalha, Setor que Trabalha, Meio de Transporte Utilizado e Meio de Candidatura para a Vaga de Emprego.
+- Gênero, Ramo da Indústria que Trabalha, Setor que Trabalha, Meio de Transporte Utilizado e Meio de Candidatura para a Vaga de Emprego.
 
 
 
@@ -256,8 +330,6 @@ all_plots2 <- map2(.x = ys1, .y = "event",
 cowplot::plot_grid(plotlist = all_plots2, nrow = 3)
 
 
-
-
 ys3 <-
   df_chr %>% 
   select(c(industry, profession)) %>% 
@@ -270,7 +342,6 @@ all_plots3 <- map2(.x = ys3, .y = "event",
 
 cowplot::plot_grid(plotlist = all_plots3, nrow = 2)
 
-
 ```
 
 - O gênero `feminino` possui maior frequência, em relação ao gênero oposto, para quem é desligado ou não
@@ -279,22 +350,11 @@ cowplot::plot_grid(plotlist = all_plots3, nrow = 2)
 
 - O ônibus é o meio de transporte mais utilizado e a caminhada é o menos utilizado
 
-### 5.4. Interação da variável `Event`
 
-
-#### 5.4.1. Variáveis quantitativas
-
-
-
-#### 5.4.2. Variáveis categóricas
-
-
+## Características da personalidade que mais 
 
 
 ```{r}
-#----- AQUI É O IMPORTANTE
-
-
 
 which_nth_highest_richie <- function(x, n){
   
@@ -302,7 +362,6 @@ which_nth_highest_richie <- function(x, n){
   which(x == max(x))
   
 }
-
 
 df_tops <- 
   dados %>% 
@@ -314,7 +373,6 @@ df_tops <-
   distinct(row, .keep_all = TRUE)
 
 
-
 #---- TOP1 POR INDIVÍDUO
 
 dados <- 
@@ -323,11 +381,17 @@ dados <-
   
   
 dados %>% 
-  filter(event == 0) %>% 
+  filter(event == "Não") %>% 
   count(event, top1, sort = TRUE) %>% 
   ggplot(data = , aes(x = reorder(top1, n), y = n)) +
-  geom_bar(stat = "identity", colour = "black", fill = "#70B7B3")
-  
+  geom_bar(stat = "identity", colour = "black", fill = "#70B7B3") +
+  geom_text(aes(label = n), vjust = 1.6, color = "white", size = 3.5) +
+  labs(x = "Característica da personalidade", y = "Quantidade") 
+
+```
+
+
+```{r}
 
 
 #--- TOP1 POR INDUSTRIA
@@ -355,12 +419,6 @@ df_industria_tops <-
   distinct(row, .keep_all = TRUE)
 
 
-```
-
-
-```{r}
-
-
 df_score <- 
   dados %>% 
   inner_join(df_industria_tops %>% select(industry, top1_ind, top2_ind, top3_ind), by = "industry")
@@ -380,7 +438,9 @@ df_score %>%
   arrange(-score) %>% 
   ggplot(data = , aes(x = reorder(traffic, score), y = score)) +
   geom_bar(stat = "identity", colour = "black", fill = "#70B7B3") +
-  labs(title = "Score de quem mais acerta por plataforma")
+  geom_text(aes(label = score), vjust = 1.6, color = "white", size = 3.5) +
+  labs(title = "Score de quem mais acerta por plataforma",
+       x = "Plataforma", y = "Score")
 
 
 ```
@@ -391,7 +451,9 @@ df_score %>%
 df_industria_tops %>% 
   filter(industry %in% c("Banks", "manufacture", "IT", "Consult", "State")) %>% 
   select(industry, top1_ind: top3_ind) %>% 
-  knitr::kable()
+  DT::datatable(rownames = FALSE, filter = 'top', 
+                options = list(pageLength = 5, dom = 'tip',
+                               autoWidth = TRUE))
 
 
 ```
